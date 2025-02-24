@@ -11,10 +11,10 @@
  *****04) Funcion para eliminar Amigos***********************
  *****05) Funcion para realizar el sorteo********************
  */
-
+//Comienzo de Codigo
  document.addEventListener("DOMContentLoaded", () => {
     let amigos = [];
-
+//Funcion Agregar Amigos
     function agregarAmigo() {
         const input = document.getElementById("amigo");
         const nombre = input.value.trim();
@@ -22,15 +22,15 @@
             alert("Por favor, ingresa un nombre válido");
             return;
         }
-        amigos.push(nombre);
+        amigos.push(`${amigos.length + 1}. ${nombre}`);
         actualizarLista();
         input.value = "";
     }
-
+    //Actualiza la lista
     function actualizarLista() {
         const listaAmigos = document.getElementById("listaAmigos");
         listaAmigos.innerHTML = "";
-
+//Funcion para eliminar amigos
         amigos.forEach((nombre, index) => {
             const li = document.createElement("li");
             li.textContent = nombre;
@@ -48,37 +48,27 @@
         amigos.splice(index, 1);
         actualizarLista();
     }
-
+//Funcion para realizar el sorteo
     function sortearAmigo() {
         if (amigos.length < 2) {
             alert("Debe haber al menos dos participantes para realizar el sorteo");
             return;
         }
         
-        let mezclados = [...amigos];
-        let resultado = [];
-
-        do {
-            mezclados = [...amigos].sort(() => Math.random() - 0.5);
-        } while (amigos.some((nombre, i) => nombre === mezclados[i]));
-
-        amigos.forEach((nombre, i) => {
-            resultado.push(`${nombre} → ${mezclados[i]}`);
-        });
-        mostrarResultado(resultado);
+        const amigoSecreto = amigos[Math.floor(Math.random() * amigos.length)];
+        mostrarResultado(amigoSecreto);
     }
 
-    function mostrarResultado(resultado) {
+    function mostrarResultado(amigoSecreto) {
         const listaResultado = document.getElementById("resultado");
         listaResultado.innerHTML = "";
 
-        resultado.forEach((item) => {
-            const li = document.createElement("li");
-            li.textContent = item;
-            listaResultado.appendChild(li);
-        });
+        const li = document.createElement("li");
+        li.textContent = `Mi amigo secreto es: ${amigoSecreto}`;
+        listaResultado.appendChild(li);
     }
 
     document.querySelector(".button-add").addEventListener("click", agregarAmigo);
     document.querySelector(".button-draw").addEventListener("click", sortearAmigo);
 });
+
