@@ -12,70 +12,73 @@
  *****05) Funcion para realizar el sorteo********************
  */
 
-// Crea la lista de amigos
-let amigos = [];
-//funcion agregar amigos
-function agregarAmigo(){
-    const input = document.getElementById("amigo");
-    const nombre = input.ariaValueMax.trim();
-    if (nombre === ""){
-        alert("Por favor, ingresa un nombre valido");
-        return
-    }
-    amigos.push(nombre);
-    actualizarLista();
-    input.value= "";//Limpia la lista 
-}
-//Actualizar la lista
-function actualizarLista(){
-    const listaAmigos = document.getElementById(listaAmigos);
-    listaAmigos.innerHTML = ""; // limpiara la lista antes de actualizar
+ document.addEventListener("DOMContentLoaded", () => {
+    let amigos = [];
 
-    amigos.forEach((nombre, index) => {
-        const li = document.createElement("li");
-        li.textContent = nombre;
+    function agregarAmigo() {
+        const input = document.getElementById("amigo");
+        const nombre = input.value.trim();
+        if (nombre === "") {
+            alert("Por favor, ingresa un nombre válido");
+            return;
+        }
+        amigos.push(nombre);
+        actualizarLista();
+        input.value = "";
+    }
+
+    function actualizarLista() {
+        const listaAmigos = document.getElementById("listaAmigos");
+        listaAmigos.innerHTML = "";
+
+        amigos.forEach((nombre, index) => {
+            const li = document.createElement("li");
+            li.textContent = nombre;
+            
+            const botonEliminar = document.createElement("button");
+            botonEliminar.textContent = "❌";
+            botonEliminar.onclick = () => eliminarAmigo(index);
+
+            li.appendChild(botonEliminar);
+            listaAmigos.appendChild(li);
+        });
+    }
+
+    function eliminarAmigo(index) {
+        amigos.splice(index, 1);
+        actualizarLista();
+    }
+
+    function sortearAmigo() {
+        if (amigos.length < 2) {
+            alert("Debe haber al menos dos participantes para realizar el sorteo");
+            return;
+        }
         
-        // Botón para eliminar un nombre
-        const botonEliminar = document.createElement("button");
-        botonEliminar.textContent = "❌";
-        botonEliminar.onclick = () => eliminarAmigo(index);
+        let mezclados = [...amigos];
+        let resultado = [];
 
-        li.appendChild(botonEliminar);
-        listaAmigos.appendChild(li);
-    });
-}
+        do {
+            mezclados = [...amigos].sort(() => Math.random() - 0.5);
+        } while (amigos.some((nombre, i) => nombre === mezclados[i]));
 
-//Funcion para eliminar amigo
-function eliminarAmigo(index){
-    amigos.splice(index,1);
-    actualizarLista();
-}
-function sortearAmigo(){
-    if (amigos.length <2){
-        alert("debe haber al menos dos participantes para  realizar el sorteo")
-        return;
+        amigos.forEach((nombre, i) => {
+            resultado.push(`${nombre} → ${mezclados[i]}`);
+        });
+        mostrarResultado(resultado);
     }
-}
-let mezclados = [...amigos]; //esta funcion sirve para  copiar el arreglo original
-let resultado = [];
 
-// ciclo do while
-do {
-    mezclados = mezclados.sort(() => Math.random() - 0.5);
-} while (amigos.some((nombre, i) => nombre === mezclados[i])); // Evita que alguien se autoasigne
+    function mostrarResultado(resultado) {
+        const listaResultado = document.getElementById("resultado");
+        listaResultado.innerHTML = "";
 
-    amigos.forEach((nombre, i) => {
-    resultado.push(`${nombre} → ${mezclados[i]}`);
+        resultado.forEach((item) => {
+            const li = document.createElement("li");
+            li.textContent = item;
+            listaResultado.appendChild(li);
+        });
+    }
+
+    document.querySelector(".button-add").addEventListener("click", agregarAmigo);
+    document.querySelector(".button-draw").addEventListener("click", sortearAmigo);
 });
-    mostrarResultado(resultado);
-
-function mostrarResultado(resultado) {
-    const listaResultado = document.getElementById("resultado");
-    listaResultado.innerHTML = "";
-
-    resultado.forEach((item) => {
-        const li = document.createElement("li");
-        li.textContent = item;
-        listaResultado.appendChild(li);
-    });
-}
