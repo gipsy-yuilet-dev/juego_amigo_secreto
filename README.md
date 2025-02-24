@@ -22,13 +22,19 @@
  3) Reglas del Juego = El juego debe tener un minimo de dos amigos, tampoco se puede dejar el campo nombre en blanco
  de lo contrario , se envia un mensaje de error, datos erroneos
 *[Acceso al proyecto](#acceso-proyecto)
+puedes acceder al proyecto mediante este enlace
+[This link](https://gipsy-yuilet-dev.github.io/juego_amigo_secreto/) Amigo Secreto.
 
 *[Tecnologías utilizadas](#tecnologías-utilizadas)
-
+  1. HTML5
+  2. CSS
+  3. Javascript
 *[Personas Contribuyentes](#personas-contribuyentes)
-
+ por el momento no hay personas contribuyentes
 *[Personas-Desarrolladores del Proyecto](#personas-desarrolladores)
-
+  Yulieta Eyzaguirre(Julieta Eyzaguirre)
 * [Licencia](#licencia)
-
+ none
 *[Conclusión](#conclusión)
+Este Juego fue un excelente desafio para aprender los fundamentos basicos
+de la programacion web con HTML5-CSS y JAVASCRIPT
